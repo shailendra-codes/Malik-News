@@ -1,3 +1,4 @@
+
 let allArticlesHTML = [];
 let currentCategory = 'all';
 
@@ -6,10 +7,13 @@ style.textContent = `
   .ticker-wrap { position: relative; overflow: hidden; }
   .ticker-title { position: relative; z-index: 2; }
   #breaking-news {
-    display: inline-block;
-    white-space: nowrap;
+    display: inline-block !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    max-width: none !important;
     padding-left: 100%;
-    animation: ticker-move 16s linear infinite;
+    animation: ticker-move 18s linear infinite;
   }
   #breaking-news:hover {
     animation-play-state: paused;
@@ -43,7 +47,6 @@ async function loadSingleNewsFile() {
 
     container.innerHTML = allArticlesHTML.join('');
 
-    // बिना किसी कोष्ठक के सीधे पहली खबर का शीर्षक लेना
     const firstHeadline = tempDiv.querySelector('h2');
     if (firstHeadline && ticker) {
       ticker.textContent = firstHeadline.textContent;
