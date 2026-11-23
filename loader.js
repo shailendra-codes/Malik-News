@@ -130,20 +130,42 @@ if (footer) {
     });
 }
 
-// हर खबर के नीचे बिना फोन नंबर वाला WhatsApp शेयर बटन जोड़ना
+
+// हर खबर के नीचे 'शेयर करें' और 'ईमेल से भेजें (Mail)' दोनों बटन लगाना
 function addShareButtons() {
   document.querySelectorAll('#news-container article').forEach(art => {
-    if (art.querySelector('.wa-share-btn')) return;
+    if (art.querySelector('.share-row')) return;
     const title = art.querySelector('h2') ? art.querySelector('h2').textContent : 'Malik News';
-    const shareText = encodeURIComponent('📰 Malik News पर पढ़ें: ' + title + '\n👉 ' + window.location.href);
- 
-    const btn = document.createElement('a');
-    btn.className = 'wa-share-btn';
-    btn.href = 'https://whatsapp.com' + shareText;
-    btn.target = '_blank';
-    btn.style.cssText = 'display: inline-block; margin-top: 12px; background: #16a34a; color: #fff; padding: 7px 14px; border-radius: 6px; text-decoration: none; font-size: 0.88rem; font-weight: bold;';
-    btn.textContent = '📲 WhatsApp पर शेयर करें';
-    art.appendChild(btn);
+    const fullMsg = '📰 Malik News पर पढ़ें: ' + title + '\n👉 ' + window.location.href;
+
+    const row = document.createElement('div');
+    row.className = 'share-row';
+    row.style.cssText = 'display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px;';
+
+    // 1. हरा शेयर बटन (WhatsApp / Share Menu)
+    const shareBtn = document.createElement('button');
+    shareBtn.type = 'button';
+    shareBtn.style.cssText = 'background: #16a34a; color: #fff; padding: 8px 14px; border-radius: 6px; border: none; cursor: pointer; font-size: 0.88rem; font-weight: bold;';
+    shareBtn.textContent = '📲 खबर शेयर करें';
+    shareBtn.onclick = function() {
+      if (navigator.share) {
+        navigator.share({ title: 'Malik News', text: fullMsg });
+      } else {
+        navigator.clipboard.writeText(fullMsg);
+        shareBtn.textContent = '✅ लिंक कॉपी हो गया!';
+        setTimeout(() => { shareBtn.textContent = '📲 खबर शेयर करें'; }, 3000);
+      }
+    };
+
+    // 2. नीला ईमेल (Mail) बटन
+    const mailBtn = document.createElement('a');
+    mailBtn.href = 'mailto:?subject=' + encodeURIComponent('Malik News: ' + title) + '&body=' + encodeURIComponent(fullMsg);
+    mailBtn.style.cssText = 'background: #1d4ed8; color: #fff; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 0.88rem; font-weight: bold; display: inline-block;';
+    mailBtn.textContent = '✉️ ईमेल से भेजें';
+
+    row.appendChild(shareBtn);
+    row.appendChild(mailBtn);
+    art.appendChild(row);
   });
 }
 
@@ -152,5 +174,4 @@ const newsBox = document.getElementById('news-container');
 if (newsBox) {
   newsObserver.observe(newsBox, { childList: true });
 }
- 
  
