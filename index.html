@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta name="google-site-verification" content="mlt2TRzrW2iidT1efqG6k_A8lAYNFazR9OlapwOTcHo" />
   <meta charset="UTF-8">
+  <meta name="google-site-verification" content="mlt2TRzVrW2IidT1efq66L_A8L4NF2at901JqpWTCYo" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Malik News - आम समस्याओं के आसान समाधान | साप्ताहिक न्यूज़लेटर</title>
-  <meta name="description" content="Malik News एक साप्ताहिक हिंदी न्यूज़लेटर है जो रोज़मर्रा की आम समस्याओं और उनके आसान समाधान बताता है।">
+  <title>Malik News - आम समस्याओं और रोज़गार का साप्ताहिक मंच</title>
+  <meta name="description" content="Malik News पूरे भारत के आम लोगों की समस्याओं, रोज़गार और सरकारी योजनाओं के आसान समाधान का साप्ताहिक हिंदी न्यूज़लेटर है।">
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -74,7 +74,7 @@
 
   <header>
     <h1>📰 Malik News</h1>
-    <p>आम लोगों की रोज़मर्रा की समस्याओं और उनके आसान समाधान का साप्ताहिक मंच</p>
+    <p>आम लोगों की रोज़मर्रा की समस्याओं और रोज़गार के समाधान का साप्ताहिक मंच</p>
   </header>
 
   <section class="subscribe-box">
@@ -84,38 +84,46 @@
 
   <!-- यहाँ सभी नई और पुरानी खबरें अपने आप लोड होंगी -->
   <main id="news-container">
-    <p style="text-align:center;">खबरें लोड हो रही हैं...</p>
+   <p style="text-align:center;">खबरें लोड हो रही हैं...</p>
   </main>
 
   <footer>
     <p>© 2026 Malik News • संपादक एवं डेवलपर: शैलेन्द्र कुमार सिंह</p>
   </footer>
 
-  <!-- स्मार्ट ऑटो-लोडर सिस्टम -->
+  <!-- 100% ऑटोमैटिक न्यूज़ लोडर (अब कभी index.html नहीं छूना पड़ेगा) -->
   <script>
-    // बस हर हफ्ते इस लिस्ट में नई फाइल का नाम सबसे ऊपर जोड़ दें
-    const newsFiles = [
-      'news-1.html'
-    ];
-
-    async function loadAllNews() {
+    async function autoLoadNews() {
       const container = document.getElementById('news-container');
-      container.innerHTML = '';
+      try {
+        // GitHub से अपने आप सभी news-*.html फाइलों की लिस्ट निकालेगा
+        const res = await fetch('https://github.com');
+        const files = await res.json();
+       
+        // सिर्फ news- से शुरू होने वाली फाइलों को छांटेगा और सबसे बड़े नंबर (नई खबर) को सबसे ऊपर रखेगा
+        const newsFiles = files
+          .filter(f => f.name.startsWith('news-') && f.name.endsWith('.html'))
+          .sort((a, b) => {
+            const numA = parseInt(a.name.replace(/\D/g, '')) || 0;
+            const numB = parseInt(b.name.replace(/\D/g, '')) || 0;
+            return numB - numA;
+          });
 
-      for (const file of newsFiles) {
-        try {
-          const response = await fetch(file);
-          if (response.ok) {
-            const html = await response.text();
+        container.innerHTML = '';
+        for (const file of newsFiles) {
+          const articleRes = await fetch(file.name);
+          if (articleRes.ok) {
+            const html = await articleRes.text();
             container.innerHTML += html;
           }
-        } catch (e) {
-          console.log('Error loading:', file);
         }
+      } catch (err) {
+        container.innerHTML = '<p style="text-align:center;">खबरें लोड करने में समस्या आई, कृपया पेज रिफ्रेश करें।</p>';
       }
     }
-    loadAllNews();
+    autoLoadNews();
   </script>
 
 </body>
 </html>
+ 
