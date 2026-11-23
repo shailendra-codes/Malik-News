@@ -220,4 +220,33 @@ if (siteHeader && mainHeading && !document.getElementById('mn-brand-row')) {
   brandRow.appendChild(textCol);
   brandRow.appendChild(makeLogo());
 }
+
+// --- Adsterra विज्ञापन लोडर (ऑटोमैटिक बैनर) ---
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        const firstArticle = document.querySelector('article');
+        if (firstArticle && !document.getElementById('adsterra-box')) {
+            const adBox = document.createElement('div');
+            adBox.id = 'adsterra-box';
+            adBox.style.cssText = 'text-align: center; margin: 20px auto; padding: 12px; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 10px; max-width: 340px;';
+            adBox.innerHTML = '<span style="font-size: 0.75rem; color: #64748b; display: block; margin-bottom: 8px; font-weight: bold;">विज्ञापन • Advertisement</span>';
+
+            window.atOptions = {
+                'key' : 'cf8eca1144160da509dbab5e00c5ee3eb',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+            };
+
+            const script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'https://bicea.org';
+           
+            adBox.appendChild(script);
+            firstArticle.parentNode.insertBefore(adBox, firstArticle.nextSibling);
+        }
+    }, 1500);
+});
+ 
  
