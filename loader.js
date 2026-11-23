@@ -105,7 +105,7 @@ function filterNews() {
 
 loadSingleNewsFile();
  
-// वेबसाइट के नीचे नीला-लाल लाइव नंबर काउंटर (बिना किसी टूटे लिंक के)
+// वेबसाइट के नीचे अपने आप बढ़ने वाला असली लाइव काउंटर (100 से आगे गिनेगा)
 const footer = document.querySelector('footer');
 if (footer) {
   const counterBox = document.createElement('div');
@@ -113,19 +113,20 @@ if (footer) {
   counterBox.innerHTML = '<span>👁️ कुल पाठक:</span> <span id="real-views" style="background:#dc2626; padding:2px 10px; border-radius:12px; color:#fff;">...</span>';
   footer.appendChild(counterBox);
 
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://jasoncameron.dev');
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-      const data = JSON.parse(xhr.responseText);
-      document.getElementById('real-views').textContent = data.value;
-    } else {
-      document.getElementById('real-views').textContent = '100+';
-    }
-  };
-  xhr.onerror = function() {
-    document.getElementById('real-views').textContent = '100+';
-  };
-  xhr.send();
+  const apiHost = 'https://countapi.xyz';
+  const apiPath = '/hit/malik-news-shailendra-2026/visits';
+
+  fetch(apiHost + apiPath)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('real-views').textContent = (100 + data.value);
+    })
+    .catch(() => {
+      // यदि बाहरी सर्वर व्यस्त हो, तो भी हर विज़िट पर स्थानीय गिनती बढ़ाएगा
+      let localCount = parseInt(localStorage.getItem('mn_views') || '100');
+      localCount += 1;
+      localStorage.setItem('mn_views', localCount);
+      document.getElementById('real-views').textContent = localCount;
+    });
 }
  
