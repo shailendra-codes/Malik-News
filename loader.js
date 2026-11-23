@@ -244,3 +244,32 @@ window.addEventListener('load', function() {
 })();
  
  
+// --- संपादक परिचय बॉक्स (शैलेन्द्र कुमार सिंह) और ईमेल बॉक्स अपडेट ---
+(function() {
+    // 1. गहरे बॉक्स में 'हर सोमवार नया अंक' को साप्ताहिक एवं दैनिक के अनुसार अपडेट करें
+    document.querySelectorAll('h2, h3, p, div').forEach(function(el) {
+        if (el.children.length === 0 && el.textContent.includes('हर सोमवार नया अंक')) {
+            el.textContent = 'हर सोमवार विशेष अंक और रोज़ाना दैनिक बुलेटिन सीधे अपने ईमेल पर पाएं (बिल्कुल मुफ्त)';
+        }
+    });
+
+    // 2. संपादक परिचय बॉक्स जोड़ें
+    if (!document.getElementById('editor-about-box')) {
+        const aboutBox = document.createElement('div');
+        aboutBox.id = 'editor-about-box';
+        aboutBox.style.cssText = 'max-width: 800px; margin: 20px auto 15px auto; padding: 15px 18px; background: #f8fafc; border-left: 4px solid #dc2626; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); font-family: inherit; line-height: 1.6; color: #1e293b;';
+        aboutBox.innerHTML = '<h3 style="margin: 0 0 8px 0; font-size: 1.05rem; color: #dc2626;">📰 Malik News • संपादक परिचय (About Editor)</h3>' +
+            '<p style="margin: 4px 0; font-size: 0.92rem;"><strong>संस्थापक एवं संपादक:</strong> शैलेन्द्र कुमार सिंह</p>' +
+            '<p style="margin: 4px 0; font-size: 0.92rem;"><strong>प्रकाशन प्रारूप:</strong> साप्ताहिक विशेष अंक (प्रत्येक सोमवार) एवं दैनिक समाचार बुलेटिन</p>' +
+            '<p style="margin: 4px 0 0 0; font-size: 0.92rem;"><strong>उद्देश्य:</strong> पूरे भारत की आम समस्याओं, रोजगार, अर्थव्यवस्था और राष्ट्रीय-अंतरराष्ट्रीय घटनाओं को निष्पक्ष, निर्भीक एवं सरल भाषा में पाठकों तक पहुँचाना।</p>';
+
+        const footer = document.querySelector('footer');
+        if (footer) {
+            footer.parentNode.insertBefore(aboutBox, footer);
+        } else {
+            document.body.appendChild(aboutBox);
+        }
+    }
+})();
+ 
+
