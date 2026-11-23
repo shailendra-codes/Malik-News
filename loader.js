@@ -186,18 +186,22 @@ if (mainFooter) {
   mainFooter.appendChild(adBox);
 }
  
-// बाएं कोने में 'MN' लोगो और दाहिनी तरफ एक सीधी रेखा में '🎙️ Malik News 🎙️' + टैगलाइन
+/
+// बाएं और दाएं दोनों कोनों पर 'MN' लोगो और बीच में बड़ा '🎙️ Malik News 🎙️' + टैगलाइन
 const siteHeader = document.querySelector('header');
 const mainHeading = document.querySelector('header h1');
 const subTagline = document.querySelector('header p');
 if (siteHeader && mainHeading && !document.getElementById('mn-brand-row')) {
   const brandRow = document.createElement('div');
   brandRow.id = 'mn-brand-row';
-  brandRow.style.cssText = 'display: flex; align-items: center; justify-content: flex-start; gap: 16px; width: 100%; max-width: 900px; margin: 0 auto; padding: 0 12px; box-sizing: border-box;';
+  brandRow.style.cssText = 'display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; max-width: 960px; margin: 0 auto; padding: 0 12px; box-sizing: border-box;';
 
-  const logoBadge = document.createElement('div');
-  logoBadge.style.cssText = 'width: 76px; height: 76px; border-radius: 50%; background: linear-gradient(135deg, #facc15, #eab308); border: 3px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #1e3a8a; font-family: sans-serif; flex-shrink: 0;';
-  logoBadge.innerHTML = '<span style="font-size: 1.75rem; font-weight: 900; line-height: 1;">MN</span><span style="font-size: 0.55rem; font-weight: 800; background: #dc2626; color: #ffffff; padding: 1px 6px; border-radius: 4px; margin-top: 3px;">NEWS</span>';
+  const createLogo = () => {
+    const badge = document.createElement('div');
+    badge.style.cssText = 'width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, #facc15, #eab308); border: 3px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #1e3a8a; font-family: sans-serif; flex-shrink: 0;';
+    badge.innerHTML = '<span style="font-size: 1.7rem; font-weight: 900; line-height: 1;">MN</span><span style="font-size: 0.55rem; font-weight: 800; background: #dc2626; color: #ffffff; padding: 1px 6px; border-radius: 4px; margin-top: 3px;">NEWS</span>';
+    return badge;
+  };
 
   const textCol = document.createElement('div');
   textCol.style.cssText = 'display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1;';
@@ -207,13 +211,13 @@ if (siteHeader && mainHeading && !document.getElementById('mn-brand-row')) {
   mainHeading.innerHTML = '<span style="font-size: 2.4rem; line-height: 1;">🎙️</span><span style="line-height: 1;">' + titleText + '</span><span style="font-size: 2.4rem; line-height: 1;">🎙️</span>';
 
   siteHeader.insertBefore(brandRow, mainHeading);
-  brandRow.appendChild(logoBadge);
+  brandRow.appendChild(createLogo());
   textCol.appendChild(mainHeading);
   if (subTagline) {
     subTagline.style.cssText = 'margin: 6px 0 0 0 !important; text-align: center; font-size: 0.95rem;';
     textCol.appendChild(subTagline);
   }
   brandRow.appendChild(textCol);
+  brandRow.appendChild(createLogo());
 }
  
-
