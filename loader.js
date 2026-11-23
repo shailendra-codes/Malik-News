@@ -186,3 +186,21 @@ if (mainFooter) {
   mainFooter.appendChild(adBox);
 }
  
+// हेडर में शाही गोल 'MN' लोगो और दोनों तरफ माइक लगाना (बिना किसी फोटो अपलोड के)
+const siteHeader = document.querySelector('header');
+const mainHeading = document.querySelector('header h1');
+if (siteHeader && mainHeading && !document.getElementById('mn-custom-logo')) {
+  const logoWrap = document.createElement('div');
+  logoWrap.id = 'mn-custom-logo';
+  logoWrap.style.cssText = 'display: flex; justify-content: center; margin-bottom: 8px;';
+  logoWrap.innerHTML = `
+    <div style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #facc15, #eab308); border: 3px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.25); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #1e3a8a; font-family: sans-serif;">
+      <span style="font-size: 1.45rem; font-weight: 900; line-height: 1; letter-spacing: -1px;">MN</span>
+      <span style="font-size: 0.5rem; font-weight: 800; background: #dc2626; color: #ffffff; padding: 1px 5px; border-radius: 4px; margin-top: 2px;">LIVE NEWS</span>
+    </div>
+  `;
+  siteHeader.insertBefore(logoWrap, mainHeading);
+  mainHeading.innerHTML = '🎙️ ' + mainHeading.textContent.replace(/🎙️/g, '').trim() + ' 🎙️';
+}
+ 
+
