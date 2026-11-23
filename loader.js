@@ -2,12 +2,27 @@
 let allArticlesHTML = [];
 let currentCategory = 'all';
 
-// सर्च बॉक्स का पुराना टेक्स्ट बदलना (index.html को छुए बिना)
+// 1. सर्च बॉक्स का पुराना टेक्स्ट बदलना
 const searchBox = document.getElementById('search-input');
 if (searchBox) {
   searchBox.placeholder = '🔍 यहाँ कोई भी खबर खोजें...';
 }
 
+// 2. index.html को छुए बिना नए कैटेगरी बटन (मनोरंजन, खेल जगत, टेक इंडस्ट्री) जोड़ना
+const filterContainer = document.querySelector('.filter-btns');
+if (filterContainer) {
+  filterContainer.innerHTML = `
+    <button class="filter-btn active" onclick="setCategory('all', this)">सभी खबरें</button>
+    <button class="filter-btn" onclick="setCategory('रोज़गार', this)">💼 रोज़गार</button>
+    <button class="filter-btn" onclick="setCategory('समस्या', this)">⚡ आम समस्याएं</button>
+    <button class="filter-btn" onclick="setCategory('योजना', this)">🏛️ सरकारी योजनाएं</button>
+    <button class="filter-btn" onclick="setCategory('मनोरंजन', this)">🎬 मनोरंजन</button>
+    <button class="filter-btn" onclick="setCategory('खेल जगत', this)">🏏 खेल जगत</button>
+    <button class="filter-btn" onclick="setCategory('टेक', this)">💻 टेक इंडस्ट्री</button>
+  `;
+}
+
+// 3. ऊपर की पट्टी को लगातार चलाने का स्टाइल
 const style = document.createElement('style');
 style.textContent = `
   .ticker-wrap { position: relative; overflow: hidden; }
