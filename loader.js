@@ -175,3 +175,13 @@ if (newsBox) {
   newsObserver.observe(newsBox, { childList: true });
 }
  
+// वेबसाइट के नीचे 'विज्ञापन एवं संपर्क' बटन जोड़ना (maliklang3489@gmail.com से जुड़ा)
+const mainFooter = document.querySelector('footer');
+if (mainFooter) {
+  const adBox = document.createElement('div');
+  adBox.style.cssText = 'margin-top: 12px;';
+  adBox.innerHTML = '<a href="mailto:maliklang3489@://gmail.comिज्ञापन%20या%20समाचार%20के%20लिए%20संपर्क" style="display: inline-block; background: #facc15; color: #1e293b; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.88rem;">📢 विज्ञापन एवं समाचार भेजने हेतु संपर्क करें</a>';
+  mainFooter.appendChild(adBox);
+}
+ 
+
