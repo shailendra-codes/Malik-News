@@ -2,6 +2,12 @@
 let allArticlesHTML = [];
 let currentCategory = 'all';
 
+// सर्च बॉक्स का पुराना टेक्स्ट बदलना (index.html को छुए बिना)
+const searchBox = document.getElementById('search-input');
+if (searchBox) {
+  searchBox.placeholder = '🔍 यहाँ कोई भी खबर खोजें...';
+}
+
 const style = document.createElement('style');
 style.textContent = `
   .ticker-wrap { position: relative; overflow: hidden; }
@@ -30,7 +36,6 @@ async function loadSingleNewsFile() {
   const ticker = document.getElementById('breaking-news');
 
   try {
-    // ?t=Date.now() लगाने से ब्राउज़र कभी पुरानी फाइल (Cache) नहीं रखेगा, हमेशा तुरंत ताज़ा खबर दिखाएगा
     const res = await fetch('all-news.html?t=' + Date.now());
     if (!res.ok) throw new Error('File not found');
     const fullHTML = await res.text();
