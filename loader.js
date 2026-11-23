@@ -221,15 +221,17 @@ if (siteHeader && mainHeading && !document.getElementById('mn-brand-row')) {
   brandRow.appendChild(makeLogo());
 }
 
-// --- Adsterra विज्ञापन लोडर (ऑटोमैटिक बैनर) ---
+// --- Adsterra विज्ञापन लोडर (Banner 300x250 + Native Banner) ---
 window.addEventListener('load', function() {
     setTimeout(function() {
-        const firstArticle = document.querySelector('article');
-        if (firstArticle && !document.getElementById('adsterra-box')) {
-            const adBox = document.createElement('div');
-            adBox.id = 'adsterra-box';
-            adBox.style.cssText = 'text-align: center; margin: 20px auto; padding: 12px; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 10px; max-width: 340px;';
-            adBox.innerHTML = '<span style="font-size: 0.75rem; color: #64748b; display: block; margin-bottom: 8px; font-weight: bold;">विज्ञापन • Advertisement</span>';
+        const articles = document.querySelectorAll('article');
+
+        // 1. पहली खबर (अंक #18) के नीचे Banner 300x250
+        if (articles.length > 0 && !document.getElementById('adsterra-box-1')) {
+            const adBox1 = document.createElement('div');
+            adBox1.id = 'adsterra-box-1';
+            adBox1.style.cssText = 'text-align: center; margin: 20px auto; padding: 12px; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 10px; max-width: 340px;';
+            adBox1.innerHTML = '<span style="font-size: 0.75rem; color: #64748b; display: block; margin-bottom: 8px; font-weight: bold;">विज्ञापन • Advertisement</span>';
 
             window.atOptions = {
                 'key' : 'cf8eca1144160da509dbab5e00c5ee3eb',
@@ -239,14 +241,29 @@ window.addEventListener('load', function() {
                 'params' : {}
             };
 
-            const script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://bicea.org';
+            const script1 = document.createElement('script');
+            script1.type = 'text/javascript';
+            script1.src = 'https://bicea.org';
            
-            adBox.appendChild(script);
-            firstArticle.parentNode.insertBefore(adBox, firstArticle.nextSibling);
+            adBox1.appendChild(script1);
+            articles[0].parentNode.insertBefore(adBox1, articles[0].nextSibling);
+        }
+
+        // 2. चौथी खबर (अंक #15) के नीचे Native Banner
+        if (articles.length > 3 && !document.getElementById('adsterra-native-box')) {
+            const adBox2 = document.createElement('div');
+            adBox2.id = 'adsterra-native-box';
+            adBox2.style.cssText = 'text-align: center; margin: 25px auto; padding: 12px; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 10px; max-width: 100%;';
+            adBox2.innerHTML = '<span style="font-size: 0.75rem; color: #64748b; display: block; margin-bottom: 8px; font-weight: bold;">प्रायोजित समाचार • Sponsored</span><div id="container-54be950fdcf2528d7a0241e626b560f1"></div>';
+
+            const script2 = document.createElement('script');
+            script2.async = true;
+            script2.setAttribute('data-cfasync', 'false');
+            script2.src = 'https://bicea.org';
+
+            adBox2.appendChild(script2);
+            articles[3].parentNode.insertBefore(adBox2, articles[3].nextSibling);
         }
     }, 1500);
 });
- 
  
