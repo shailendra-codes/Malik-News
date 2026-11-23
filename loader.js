@@ -1,7 +1,6 @@
 let allArticlesHTML = [];
 let currentCategory = 'all';
 
-// index.html को छुए बिना पट्टी को चलाने (Scroll) का स्टाइल जोड़ना
 const style = document.createElement('style');
 style.textContent = `
   .ticker-wrap { position: relative; }
@@ -44,10 +43,12 @@ async function loadSingleNewsFile() {
 
     container.innerHTML = allArticlesHTML.join('');
 
-    // सबसे ऊपर वाली (ताज़ा) खबर का शीर्षक ब्रेकिंग न्यूज़ पट्टी में डालना
-    const firstHeadline = articles.querySelector('h2');
-    if (firstHeadline && ticker) {
-      ticker.textContent = firstHeadline.textContent;
+    // पहली (सबसे ऊपर वाली) खबर का शीर्षक ब्रेकिंग न्यूज़ पट्टी में डालना
+    if (articles.length > 0 && ticker) {
+      const firstHeadline = articles[0].querySelector('h2');
+      if (firstHeadline) {
+        ticker.textContent = firstHeadline.textContent;
+      }
     }
   } catch (e) {
     container.innerHTML = '<p style="text-align:center;">खबरें लोड हो रही हैं, कृपया पेज रिफ्रेश करें।</p>';
