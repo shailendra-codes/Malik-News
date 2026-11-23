@@ -105,12 +105,27 @@ function filterNews() {
 
 loadSingleNewsFile();
  
-// वेबसाइट के नीचे शाही नीला (Blue) और लाल (Red) लाइव पाठक काउंटर
+// वेबसाइट के नीचे नीला-लाल लाइव नंबर काउंटर (बिना किसी टूटे लिंक के)
 const footer = document.querySelector('footer');
 if (footer) {
   const counterBox = document.createElement('div');
-  counterBox.style.cssText = 'margin-top: 12px; display: flex; justify-content: center; align-items: center; gap: 8px; font-weight: bold; color: #ffffff; background: #1d4ed8; padding: 6px 14px; border-radius: 20px; width: fit-content; margin-left: auto; margin-right: auto; border: 1px solid #93c5fd;';
-  counterBox.innerHTML = '<span>👁️ कुल पाठक:</span> <img src="https://seeyoufarm.com" alt="Total Views" style="height: 22px;">';
+  counterBox.style.cssText = 'margin-top: 12px; display: inline-flex; align-items: center; gap: 8px; font-weight: bold; color: #ffffff; background: #1d4ed8; padding: 6px 14px; border-radius: 20px; border: 1px solid #93c5fd; font-size: 0.9rem;';
+  counterBox.innerHTML = '<span>👁️ कुल पाठक:</span> <span id="real-views" style="background:#dc2626; padding:2px 10px; border-radius:12px; color:#fff;">...</span>';
   footer.appendChild(counterBox);
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://jasoncameron.dev');
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      const data = JSON.parse(xhr.responseText);
+      document.getElementById('real-views').textContent = data.value;
+    } else {
+      document.getElementById('real-views').textContent = '100+';
+    }
+  };
+  xhr.onerror = function() {
+    document.getElementById('real-views').textContent = '100+';
+  };
+  xhr.send();
 }
  
