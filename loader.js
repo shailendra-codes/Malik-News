@@ -182,7 +182,7 @@ if (mainFooter) {
   const myEmail = 'maliklang3489' + '@' + 'gmail.com';
   const adBox = document.createElement('div');
   adBox.style.cssText = 'margin-top: 12px;';
-  adBox.innerHTML = '<a href="mailto:' + myEmail + '?subject=Malik%20News%20Vigyapan%20ya%20Samachar" style="display: inline-block; background: #facc15; color: #1e293b; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.88rem;">📢 विज्ञापन एवं समाचार भेजने हेतु संपर्क करें</a>';
+  adBox.innerHTML = '<a href="mailto:' + myEmail + '?subject=Malik%20News" style="display:inline-block;background:#facc15;color:#1e293b;padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:0.88rem;">📢 विज्ञापन एवं समाचार भेजने हेतु संपर्क करें</a>';
   mainFooter.appendChild(adBox);
 }
  
@@ -200,6 +200,7 @@ if (siteHeader && mainHeading && !document.getElementById('mn-brand-row')) {
     const b = document.createElement('div');
     b.style.cssText = 'width:70px;height:70px;border-radius:50%;background:#facc15;border:3px solid #fff;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#1e3a8a;font-family:sans-serif;flex-shrink:0;';
     b.innerHTML = '<b style="font-size:1.6rem;line-height:1;">MN</b><span style="font-size:0.55rem;font-weight:bold;background:#dc2626;color:#fff;padding:1px 5px;border-radius:3px;margin-top:2px;">NEWS</span>';
+ 
     return b;
   };
 
