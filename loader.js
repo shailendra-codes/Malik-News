@@ -1,38 +1,36 @@
 let allArticlesHTML = [];
 let currentCategory = 'all';
 
-async function autoLoadNewsUnlimited() {
+async function loadSingleNewsFile() {
   const container = document.getElementById('news-container');
   const ticker = document.getElementById('breaking-news');
-  allArticlesHTML = [];
-  let num = 1;
 
-  // सीधे news-1.html, news-2.html, news-3.html... को बिना किसी API सीमा के लोड करेगा
-  while (true) {
-    try {
-      const res = await fetch(`news-${num}.html`);
-      if (!res.ok) break;
-      const html = await res.text();
-      allArticlesHTML.unshift(html); // नई खबर सबसे ऊपर
-      num++;
-    } catch (e) {
-      break;
+  try {
+    const res = await fetch('all-news.html');
+    if (!res.ok) throw new Error('File not found');
+    const fullHTML = await res.text();
+
+    // all-news.html के अंदर से सभी <article> अलग-अलग निकालेगा
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = fullHTML;
+    const articles = tempDiv.querySelectorAll('article');
+
+    allArticlesHTML = Array.from(articles).map(art => art.outerHTML);
+
+    if (allArticlesHTML.length === 0) {
+      container.innerHTML = '<p style="text-align:center;">अभी कोई खबर उपलब्ध नहीं है।</p>';
+      return;
     }
-  }
 
-  if (allArticlesHTML.length === 0) {
-    container.innerHTML = '<p style="text-align:center;">अभी कोई खबर उपलब्ध नहीं है।</p>';
-    return;
-  }
+    container.innerHTML = allArticlesHTML.join('');
 
-  container.innerHTML = allArticlesHTML.join('');
-
-  // सबसे नई खबर का शीर्षक ब्रेकिंग न्यूज़ पट्टी में डालना
-  const tempDiv = document.createElement('div');
-  tempDiv.innerHTML = allArticlesHTML;
-  const headline = tempDiv.querySelector('h2');
-  if (headline && ticker) {
-    ticker.textContent = headline.textContent;
+    // सबसे ऊपर वाली (ताज़ा) खबर का शीर्षक ब्रेकिंग न्यूज़ पट्टी में डालना
+    const firstHeadline = articles[0].querySelector('h2');
+    if (firstHeadline && ticker) {
+      ticker.textContent = firstHeadline.textContent;
+    }
+  } catch (e) {
+    container.innerHTML = '<p style="text-align:center;">खबरें लोड हो रही हैं, कृपया पेज रिफ्रेश करें।</p>';
   }
 }
 
@@ -62,5 +60,5 @@ function filterNews() {
   }
 }
 
-autoLoadNewsUnlimited();
+loadSingleNewsFile();
  
