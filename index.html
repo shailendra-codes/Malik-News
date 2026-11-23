@@ -10,39 +10,108 @@
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       line-height: 1.6;
-      color: #222;
-      max-width: 720px;
+      color: #1f2937;
+      max-width: 760px;
       margin: 0 auto;
-      padding: 20px;
-      background-color: #f9fafb;
+      padding: 15px;
+      background-color: #f8fafc;
     }
+    /* ब्रेकिंग न्यूज़ पट्टी (सुनहरा-नारंगी रंग) */
+    .ticker-wrap {
+      display: flex;
+      align-items: center;
+      background: #1e293b;
+      color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+    .ticker-title {
+      background: #d97706;
+      color: #fff;
+      padding: 8px 14px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+    .ticker-text {
+      padding: 8px 12px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    /* मुख्य हेडर (शाही न्यूज़ लाल रंग) */
     header {
       text-align: center;
-      padding: 30px 15px;
-      background: #1e3a8a;
+      padding: 32px 15px;
+      background: linear-gradient(135deg, #b91c1c, #991b1b);
       color: #fff;
       border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(185, 28, 28, 0.2);
     }
-    header h1 { margin: 0; font-size: 2.2rem; }
-    header p { margin: 8px 0 0; font-size: 1.05rem; opacity: 0.9; }
-    .subscribe-box {
+    header h1 { margin: 0; font-size: 2.3rem; letter-spacing: 0.5px; }
+    header p { margin: 8px 0 0; font-size: 1.05rem; opacity: 0.95; }
+   
+    /* सर्च और कैटेगरी फ़िल्टर बॉक्स */
+    .search-filter-box {
       background: #fff;
-      padding: 25px;
-      margin: 25px 0;
+      padding: 18px;
+      margin: 20px 0;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border-top: 3px solid #b91c1c;
+    }
+    .search-input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px 15px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+    .filter-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 7px 14px;
+      border: 1px solid #b91c1c;
+      background: #fff;
+      color: #b91c1c;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .filter-btn.active {
+      background: #b91c1c;
+      color: #fff;
+    }
+
+    .subscribe-box {
+      background: #1e293b;
+      color: #fff;
+      padding: 24px;
+      margin: 20px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       text-align: center;
     }
+    .subscribe-box h3 { margin-top: 0; }
     .subscribe-btn {
       display: inline-block;
-      padding: 14px 28px;
+      padding: 12px 26px;
       background: #16a34a;
       color: #fff;
       text-decoration: none;
       border-radius: 8px;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: bold;
-      margin-top: 10px;
     }
     article {
       background: #fff;
@@ -50,13 +119,14 @@
       margin-bottom: 20px;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border-left: 4px solid #b91c1c;
     }
-    article h2 { color: #1e3a8a; margin-top: 0; }
+    article h2 { color: #991b1b; margin-top: 0; }
     .tag {
       display: inline-block;
-      background: #e0e7ff;
-      color: #1e3a8a;
-      padding: 3px 10px;
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 3px 12px;
       border-radius: 15px;
       font-size: 0.85rem;
       font-weight: bold;
@@ -66,41 +136,60 @@
       text-align: center;
       margin-top: 30px;
       font-size: 0.9rem;
-      color: #666;
+      color: #4b5563;
     }
   </style>
 </head>
 <body>
 
+  <!-- 3. ऑटोमैटिक ब्रेकिंग न्यूज़ पट्टी -->
+  <div class="ticker-wrap">
+    <div class="ticker-title">⚡ ताज़ा खबर</div>
+    <div class="ticker-text" id="breaking-news">Malik News के ताज़ा अंक लोड हो रहे हैं...</div>
+  </div>
+
   <header>
     <h1>📰 Malik News</h1>
-    <p>आम लोगों की रोज़मर्रा की समस्याओं और रोज़गार के समाधान का साप्ताहिक मंच</p>
-  </header>
+    <p>पूरे भारत की आम समस्याओं, रोज़गार और समाधान का साप्ताहिक मंच</p>
+      </header>
+
+  <!-- 2. सर्च बार और कैटेगरी फ़िल्टर -->
+  <section class="search-filter-box">
+    <input type="text" id="search-input" class="search-input" placeholder="🔍 कोई खबर ढूंढें (जैसे: रोज़गार, बिजली, योजना, ठगी)..." onkeyup="filterNews()">
+    <div class="filter-btns">
+      <button class="filter-btn active" onclick="setCategory('all', this)">सभी खबरें</button>
+      <button class="filter-btn" onclick="setCategory('रोज़गार', this)">💼 रोज़गार</button>
+      <button class="filter-btn" onclick="setCategory('समस्या', this)">⚡ आम समस्याएं</button>
+      <button class="filter-btn" onclick="setCategory('योजना', this)">🏛️ सरकारी योजनाएं</button>
+    </div>
+  </section>
+
+  <!-- यहाँ सभी खबरें अपने आप लोड होंगी -->
+  <main id="news-container">
+    <p style="text-align:center;">खबरें लोड हो रही हैं...</p>
+  </main>
 
   <section class="subscribe-box">
     <h3>हर सोमवार नया अंक सीधे अपने ईमेल पर पाएं (बिल्कुल मुफ़्त)</h3>
     <a href="mailto:aapka-email@://gmail.com" class="subscribe-btn">✉️ मुफ़्त में जुड़ें (Subscribe)</a>
   </section>
 
-  <!-- यहाँ सभी नई और पुरानी खबरें अपने आप लोड होंगी -->
-  <main id="news-container">
-   <p style="text-align:center;">खबरें लोड हो रही हैं...</p>
-  </main>
-
   <footer>
     <p>© 2026 Malik News • संपादक एवं डेवलपर: शैलेन्द्र कुमार सिंह</p>
   </footer>
 
-  <!-- 100% ऑटोमैटिक न्यूज़ लोडर (अब कभी index.html नहीं छूना पड़ेगा) -->
+  <!-- स्मार्ट ऑटो-लोडर + सर्च + ब्रेकिंग न्यूज़ इंजन -->
   <script>
+    let allArticlesHTML = [];
+    let currentCategory = 'all';
+
     async function autoLoadNews() {
       const container = document.getElementById('news-container');
+      const ticker = document.getElementById('breaking-news');
       try {
-        // GitHub से अपने आप सभी news-*.html फाइलों की लिस्ट निकालेगा
         const res = await fetch('https://github.com');
         const files = await res.json();
        
-        // सिर्फ news- से शुरू होने वाली फाइलों को छांटेगा और सबसे बड़े नंबर (नई खबर) को सबसे ऊपर रखेगा
         const newsFiles = files
           .filter(f => f.name.startsWith('news-') && f.name.endsWith('.html'))
           .sort((a, b) => {
@@ -110,17 +199,56 @@
           });
 
         container.innerHTML = '';
-        for (const file of newsFiles) {
-          const articleRes = await fetch(file.name);
+        allArticlesHTML = [];
+
+        for (let i = 0; i < newsFiles.length; i++) {
+          const articleRes = await fetch(newsFiles[i].name);
           if (articleRes.ok) {
             const html = await articleRes.text();
+            allArticlesHTML.push(html);
             container.innerHTML += html;
+
+            if (i === 0) {
+              const tempDiv = document.createElement('div');
+              tempDiv.innerHTML = html;
+              const headline = tempDiv.querySelector('h2');
+              if (headline) {
+                ticker.textContent = headline.textContent;
+              }
+            }
           }
         }
       } catch (err) {
         container.innerHTML = '<p style="text-align:center;">खबरें लोड करने में समस्या आई, कृपया पेज रिफ्रेश करें।</p>';
       }
     }
+
+    function setCategory(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterNews();
+    }
+
+    function filterNews() {
+      const query = document.getElementById('search-input').value.toLowerCase();
+      const container = document.getElementById('news-container');
+      container.innerHTML = '';
+
+      const filtered = allArticlesHTML.filter(html => {
+        const text = html.toLowerCase();
+        const matchesSearch = text.includes(query);
+        const matchesCat = currentCategory === 'all' || text.includes(currentCategory.toLowerCase());
+        return matchesSearch && matchesCat;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<p style="text-align:center; padding:20px; background:#fff; border-radius:10px;">इस खोज से जुड़ी कोई खबर नहीं मिली।</p>';
+      } else {
+        container.innerHTML = filtered.join('');
+      }
+    }
+
     autoLoadNews();
   </script>
 
