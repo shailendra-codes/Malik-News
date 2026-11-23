@@ -244,12 +244,17 @@ window.addEventListener('load', function() {
 })();
  
  
-// --- संपादक परिचय बॉक्स (शैलेन्द्र कुमार सिंह) और ईमेल बॉक्स अपडेट ---
+// --- संपादक परिचय बॉक्स, ईमेल बॉक्स और क्लीन कॉपीराइट लाइन ---
 (function() {
     // 1. गहरे बॉक्स में 'हर सोमवार नया अंक' को साप्ताहिक एवं दैनिक के अनुसार अपडेट करें
-    document.querySelectorAll('h2, h3, p, div').forEach(function(el) {
-        if (el.children.length === 0 && el.textContent.includes('हर सोमवार नया अंक')) {
-            el.textContent = 'हर सोमवार विशेष अंक और रोज़ाना दैनिक बुलेटिन सीधे अपने ईमेल पर पाएं (बिल्कुल मुफ्त)';
+    document.querySelectorAll('h2, h3, p, div, span').forEach(function(el) {
+        if (el.children.length === 0) {
+            if (el.textContent.includes('हर सोमवार नया अंक')) {
+                el.textContent = 'हर सोमवार विशेष अंक और रोज़ाना दैनिक बुलेटिन सीधे अपने ईमेल पर पाएं (बिल्कुल मुफ्त)';
+            }
+            if (el.textContent.includes('© 2026 Malik News')) {
+                el.textContent = '© 2026 Malik News • सर्वाधिकार सुरक्षित (All Rights Reserved)';
+            }
         }
     });
 
@@ -272,4 +277,3 @@ window.addEventListener('load', function() {
     }
 })();
  
-
