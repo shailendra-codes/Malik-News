@@ -105,22 +105,12 @@ function filterNews() {
 
 loadSingleNewsFile();
  
-// वेबसाइट के नीचे लाइव विज़िटर काउंटर जोड़ना (index.html को छुए बिना)
+// वेबसाइट के नीचे शाही नीला (Blue) और लाल (Red) लाइव पाठक काउंटर
 const footer = document.querySelector('footer');
 if (footer) {
   const counterBox = document.createElement('div');
-  counterBox.style.cssText = 'margin-top: 10px; font-weight: bold; color: #facc15;';
-  counterBox.innerHTML = '👁️ कुल पाठक (Total Views): <span id="visit-count">गिनती हो रही है...</span>';
+  counterBox.style.cssText = 'margin-top: 12px; display: flex; justify-content: center; align-items: center; gap: 8px; font-weight: bold; color: #ffffff; background: #1d4ed8; padding: 6px 14px; border-radius: 20px; width: fit-content; margin-left: auto; margin-right: auto; border: 1px solid #93c5fd;';
+  counterBox.innerHTML = '<span>👁️ कुल पाठक:</span> <img src="https://seeyoufarm.com" alt="Total Views" style="height: 22px;">';
   footer.appendChild(counterBox);
-
-  fetch('https://counterapi.dev')
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById('visit-count').textContent = data.count;
-    })
-    .catch(() => {
-      document.getElementById('visit-count').textContent = 'सक्रिय';
-    });
 }
  
-
