@@ -105,3 +105,22 @@ function filterNews() {
 
 loadSingleNewsFile();
  
+// वेबसाइट के नीचे लाइव विज़िटर काउंटर जोड़ना (index.html को छुए बिना)
+const footer = document.querySelector('footer');
+if (footer) {
+  const counterBox = document.createElement('div');
+  counterBox.style.cssText = 'margin-top: 10px; font-weight: bold; color: #facc15;';
+  counterBox.innerHTML = '👁️ कुल पाठक (Total Views): <span id="visit-count">गिनती हो रही है...</span>';
+  footer.appendChild(counterBox);
+
+  fetch('https://counterapi.dev')
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('visit-count').textContent = data.count;
+    })
+    .catch(() => {
+      document.getElementById('visit-count').textContent = 'सक्रिय';
+    });
+}
+ 
+
