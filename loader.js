@@ -221,27 +221,17 @@ if (siteHeader && mainHeading && !document.getElementById('mn-brand-row')) {
   brandRow.appendChild(makeLogo());
 }
 
-// --- Adsterra मानक (Standard) पतला बैनर 320x50 ---
+// --- Adsterra Smartlink बटन (बिना खाली बॉक्स के 100% कमाई वाला कोड) ---
 window.addEventListener('load', function() {
     setTimeout(function() {
         const firstNews = document.querySelector('article');
-        if (firstNews && !document.getElementById('adsterra-slim-320x50')) {
-            const adBox = document.createElement('div');
-            adBox.id = 'adsterra-slim-320x50';
-            adBox.style.cssText = 'text-align: center; margin: 15px auto; padding: 6px; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; max-width: 336px;';
-            adBox.innerHTML = '<span style="font-size: 10px; color: #64748b; display: block; margin-bottom: 4px;">विज्ञापन • Advertisement</span>';
-
-            const iframe = document.createElement('iframe');
-            iframe.style.cssText = 'width: 320px; height: 50px; border: none; overflow: hidden; display: block; margin: 0 auto;';
-            iframe.scrolling = 'no';
-            adBox.appendChild(iframe);
-            firstNews.parentNode.insertBefore(adBox, firstNews.nextSibling);
-
-            const doc = iframe.contentWindow.document;
-            doc.open();
-            doc.write('<!DOCTYPE html><html><body style="margin:0;padding:0;overflow:hidden;"><script>atOptions={"key":"65a6b3d05c8c52fe72dc7b7e80e365","format":"iframe","height":50,"width":320,"params":{}};<\/script><script data-cfasync="false" src="https://bicea.org"><\/script></body></html>');
-            doc.close();
+        if (firstNews && !document.getElementById('smartlink-promo')) {
+            const promoBox = document.createElement('div');
+            promoBox.id = 'smartlink-promo';
+            promoBox.style.cssText = 'text-align: center; margin: 18px auto; padding: 10px; max-width: 360px;';
+            promoBox.innerHTML = '<a href="https://asiafilm.org" target="_blank" rel="noopener noreferrer" style="display: block; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #ffffff; padding: 11px 18px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25);">🔥 विशेष प्रायोजित ऑफर देखें • Sponsored</a>';
+            firstNews.parentNode.insertBefore(promoBox, firstNews.nextSibling);
         }
-    }, 1500);
+    }, 1000);
 });
  
