@@ -221,35 +221,47 @@ if (siteHeader && mainHeading && !document.getElementById('mn-brand-row')) {
   brandRow.appendChild(makeLogo());
 }
 
-// --- Adsterra विज्ञापन लोडर (Banner 300x250 + Native Banner) ---
+// --- Adsterra विज्ञापन लोडर (100% वर्किंग वर्ज़न) ---
 window.addEventListener('load', function() {
     setTimeout(function() {
         const articles = document.querySelectorAll('article');
 
-        // 1. पहली खबर (अंक #18) के नीचे Banner 300x250
+        // 1. पहली खबर के नीचे Banner 300x250
         if (articles.length > 0 && !document.getElementById('adsterra-box-1')) {
             const adBox1 = document.createElement('div');
             adBox1.id = 'adsterra-box-1';
             adBox1.style.cssText = 'text-align: center; margin: 20px auto; padding: 12px; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 10px; max-width: 340px;';
             adBox1.innerHTML = '<span style="font-size: 0.75rem; color: #64748b; display: block; margin-bottom: 8px; font-weight: bold;">विज्ञापन • Advertisement</span>';
 
-            window.atOptions = {
-                'key' : 'cf8eca1144160da509dbab5e00c5ee3eb',
-                'format' : 'iframe',
-                'height' : 250,
-                'width' : 300,
-                'params' : {}
-            };
-
-            const script1 = document.createElement('script');
-            script1.type = 'text/javascript';
-            script1.src = 'https://bicea.org';
-           
-            adBox1.appendChild(script1);
+            const iframe = document.createElement('iframe');
+            iframe.style.cssText = 'width: 300px; height: 250px; border: none; overflow: hidden; display: block; margin: 0 auto;';
+            iframe.scrolling = 'no';
+            adBox1.appendChild(iframe);
             articles[0].parentNode.insertBefore(adBox1, articles[0].nextSibling);
+
+            const doc = iframe.contentWindow.document;
+            doc.open();
+            doc.write(`
+                <!DOCTYPE html>
+                <html>
+                <body style="margin:0;padding:0;overflow:hidden;">
+                    <script type="text/javascript">
+                        atOptions = {
+                            'key' : 'cf8eca1144160da509dbab5e00c5ee3eb',
+                            'format' : 'iframe',
+                            'height' : 250,
+                            'width' : 300,
+                            'params' : {}
+                        };
+                    <\/script>
+                    <script type="text/javascript" src="https://bicea.org"><\/script>
+                </body>
+                </html>
+            `);
+            doc.close();
         }
 
-        // 2. चौथी खबर (अंक #15) के नीचे Native Banner
+        // 2. चौथी खबर के नीचे Native Banner
         if (articles.length > 3 && !document.getElementById('adsterra-native-box')) {
             const adBox2 = document.createElement('div');
             adBox2.id = 'adsterra-native-box';
