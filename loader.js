@@ -234,4 +234,13 @@ window.addEventListener('load', function() {
         }
     }, 1000);
 });
+
+// --- हेडर टैगलाइन में 'साप्ताहिक एवं दैनिक' अपडेट ---
+(function() {
+    const subTitle = document.querySelector('header p');
+    if (subTitle) {
+        subTitle.innerHTML = 'पूरे भारत की आम समस्याओं, रोजगार और समाधान का <strong>साप्ताहिक एवं दैनिक</strong> मंच';
+    }
+})();
+ 
  
