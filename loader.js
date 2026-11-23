@@ -3,7 +3,7 @@ let currentCategory = 'all';
 
 const style = document.createElement('style');
 style.textContent = `
-  .ticker-wrap { position: relative; }
+  .ticker-wrap { position: relative; overflow: hidden; }
   .ticker-title { position: relative; z-index: 2; }
   #breaking-news {
     display: inline-block;
@@ -43,12 +43,10 @@ async function loadSingleNewsFile() {
 
     container.innerHTML = allArticlesHTML.join('');
 
-    // पहली (सबसे ऊपर वाली) खबर का शीर्षक ब्रेकिंग न्यूज़ पट्टी में डालना
-    if (articles.length > 0 && ticker) {
-      const firstHeadline = articles[0].querySelector('h2');
-      if (firstHeadline) {
-        ticker.textContent = firstHeadline.textContent;
-      }
+    // बिना किसी कोष्ठक के सीधे पहली खबर का शीर्षक लेना
+    const firstHeadline = tempDiv.querySelector('h2');
+    if (firstHeadline && ticker) {
+      ticker.textContent = firstHeadline.textContent;
     }
   } catch (e) {
     container.innerHTML = '<p style="text-align:center;">खबरें लोड हो रही हैं, कृपया पेज रिफ्रेश करें।</p>';
