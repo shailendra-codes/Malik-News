@@ -16,7 +16,6 @@
       padding: 15px;
       background-color: #f8fafc;
     }
-    /* ब्रेकिंग न्यूज़ पट्टी (सुनहरा-नारंगी रंग) */
     .ticker-wrap {
       display: flex;
       align-items: center;
@@ -43,7 +42,6 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    /* मुख्य हेडर (शाही न्यूज़ लाल रंग) */
     header {
       text-align: center;
       padding: 32px 15px;
@@ -55,7 +53,6 @@
     header h1 { margin: 0; font-size: 2.3rem; letter-spacing: 0.5px; }
     header p { margin: 8px 0 0; font-size: 1.05rem; opacity: 0.95; }
    
-    /* सर्च और कैटेगरी फ़िल्टर बॉक्स */
     .search-filter-box {
       background: #fff;
       padding: 18px;
@@ -142,7 +139,6 @@
 </head>
 <body>
 
-  <!-- 3. ऑटोमैटिक ब्रेकिंग न्यूज़ पट्टी -->
   <div class="ticker-wrap">
     <div class="ticker-title">⚡ ताज़ा खबर</div>
     <div class="ticker-text" id="breaking-news">Malik News के ताज़ा अंक लोड हो रहे हैं...</div>
@@ -151,9 +147,8 @@
   <header>
     <h1>📰 Malik News</h1>
     <p>पूरे भारत की आम समस्याओं, रोज़गार और समाधान का साप्ताहिक मंच</p>
-      </header>
+  </header>
 
-  <!-- 2. सर्च बार और कैटेगरी फ़िल्टर -->
   <section class="search-filter-box">
     <input type="text" id="search-input" class="search-input" placeholder="🔍 कोई खबर ढूंढें (जैसे: रोज़गार, बिजली, योजना, ठगी)..." onkeyup="filterNews()">
     <div class="filter-btns">
@@ -164,7 +159,6 @@
     </div>
   </section>
 
-  <!-- यहाँ सभी खबरें अपने आप लोड होंगी -->
   <main id="news-container">
     <p style="text-align:center;">खबरें लोड हो रही हैं...</p>
   </main>
@@ -178,79 +172,7 @@
     <p>© 2026 Malik News • संपादक एवं डेवलपर: शैलेन्द्र कुमार सिंह</p>
   </footer>
 
-  <!-- स्मार्ट ऑटो-लोडर + सर्च + ब्रेकिंग न्यूज़ इंजन -->
-  <script>
-    let allArticlesHTML = [];
-    let currentCategory = 'all';
-
-    async function autoLoadNews() {
-      const container = document.getElementById('news-container');
-      const ticker = document.getElementById('breaking-news');
-      try {
-        const res = await fetch('https://github.com');
-        const files = await res.json();
-       
-        const newsFiles = files
-          .filter(f => f.name.startsWith('news-') && f.name.endsWith('.html'))
-          .sort((a, b) => {
-            const numA = parseInt(a.name.replace(/\D/g, '')) || 0;
-            const numB = parseInt(b.name.replace(/\D/g, '')) || 0;
-            return numB - numA;
-          });
-
-        container.innerHTML = '';
-        allArticlesHTML = [];
-
-        for (let i = 0; i < newsFiles.length; i++) {
-          const articleRes = await fetch(newsFiles[i].name);
-          if (articleRes.ok) {
-            const html = await articleRes.text();
-            allArticlesHTML.push(html);
-            container.innerHTML += html;
-
-            if (i === 0) {
-              const tempDiv = document.createElement('div');
-              tempDiv.innerHTML = html;
-              const headline = tempDiv.querySelector('h2');
-              if (headline) {
-                ticker.textContent = headline.textContent;
-              }
-            }
-          }
-        }
-      } catch (err) {
-        container.innerHTML = '<p style="text-align:center;">खबरें लोड करने में समस्या आई, कृपया पेज रिफ्रेश करें।</p>';
-      }
-    }
-
-    function setCategory(cat, btn) {
-      currentCategory = cat;
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      filterNews();
-    }
-
-    function filterNews() {
-      const query = document.getElementById('search-input').value.toLowerCase();
-      const container = document.getElementById('news-container');
-      container.innerHTML = '';
-
-      const filtered = allArticlesHTML.filter(html => {
-        const text = html.toLowerCase();
-        const matchesSearch = text.includes(query);
-        const matchesCat = currentCategory === 'all' || text.includes(currentCategory.toLowerCase());
-        return matchesSearch && matchesCat;
-      });
-
-      if (filtered.length === 0) {
-        container.innerHTML = '<p style="text-align:center; padding:20px; background:#fff; border-radius:10px;">इस खोज से जुड़ी कोई खबर नहीं मिली।</p>';
-      } else {
-        container.innerHTML = filtered.join('');
-      }
-    }
-
-    autoLoadNews();
-  </script>
+  <script src="loader.js"></script>
 
 </body>
 </html>
