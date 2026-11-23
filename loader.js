@@ -221,60 +221,26 @@ if (siteHeader && mainHeading && !document.getElementById('mn-brand-row')) {
   brandRow.appendChild(makeLogo());
 }
 
-// --- Adsterra विज्ञापन लोडर (100% वर्किंग वर्ज़न) ---
+// --- Adsterra मानक (Standard) पतला बैनर 320x50 ---
 window.addEventListener('load', function() {
     setTimeout(function() {
-        const articles = document.querySelectorAll('article');
-
-        // 1. पहली खबर के नीचे Banner 300x250
-        if (articles.length > 0 && !document.getElementById('adsterra-box-1')) {
-            const adBox1 = document.createElement('div');
-            adBox1.id = 'adsterra-box-1';
-            adBox1.style.cssText = 'text-align: center; margin: 20px auto; padding: 12px; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 10px; max-width: 340px;';
-            adBox1.innerHTML = '<span style="font-size: 0.75rem; color: #64748b; display: block; margin-bottom: 8px; font-weight: bold;">विज्ञापन • Advertisement</span>';
+        const firstNews = document.querySelector('article');
+        if (firstNews && !document.getElementById('adsterra-slim-320x50')) {
+            const adBox = document.createElement('div');
+            adBox.id = 'adsterra-slim-320x50';
+            adBox.style.cssText = 'text-align: center; margin: 15px auto; padding: 6px; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; max-width: 336px;';
+            adBox.innerHTML = '<span style="font-size: 10px; color: #64748b; display: block; margin-bottom: 4px;">विज्ञापन • Advertisement</span>';
 
             const iframe = document.createElement('iframe');
-            iframe.style.cssText = 'width: 300px; height: 250px; border: none; overflow: hidden; display: block; margin: 0 auto;';
+            iframe.style.cssText = 'width: 320px; height: 50px; border: none; overflow: hidden; display: block; margin: 0 auto;';
             iframe.scrolling = 'no';
-            adBox1.appendChild(iframe);
-            articles[0].parentNode.insertBefore(adBox1, articles[0].nextSibling);
+            adBox.appendChild(iframe);
+            firstNews.parentNode.insertBefore(adBox, firstNews.nextSibling);
 
             const doc = iframe.contentWindow.document;
             doc.open();
-            doc.write(`
-                <!DOCTYPE html>
-                <html>
-                <body style="margin:0;padding:0;overflow:hidden;">
-                    <script type="text/javascript">
-                        atOptions = {
-                            'key' : 'cf8eca1144160da509dbab5e00c5ee3eb',
-                            'format' : 'iframe',
-                            'height' : 250,
-                            'width' : 300,
-                            'params' : {}
-                        };
-                    <\/script>
-                    <script type="text/javascript" src="https://bicea.org"><\/script>
-                </body>
-                </html>
-            `);
+            doc.write('<!DOCTYPE html><html><body style="margin:0;padding:0;overflow:hidden;"><script>atOptions={"key":"65a6b3d05c8c52fe72dc7b7e80e365","format":"iframe","height":50,"width":320,"params":{}};<\/script><script data-cfasync="false" src="https://bicea.org"><\/script></body></html>');
             doc.close();
-        }
-
-        // 2. चौथी खबर के नीचे Native Banner
-        if (articles.length > 3 && !document.getElementById('adsterra-native-box')) {
-            const adBox2 = document.createElement('div');
-            adBox2.id = 'adsterra-native-box';
-            adBox2.style.cssText = 'text-align: center; margin: 25px auto; padding: 12px; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 10px; max-width: 100%;';
-            adBox2.innerHTML = '<span style="font-size: 0.75rem; color: #64748b; display: block; margin-bottom: 8px; font-weight: bold;">प्रायोजित समाचार • Sponsored</span><div id="container-54be950fdcf2528d7a0241e626b560f1"></div>';
-
-            const script2 = document.createElement('script');
-            script2.async = true;
-            script2.setAttribute('data-cfasync', 'false');
-            script2.src = 'https://bicea.org';
-
-            adBox2.appendChild(script2);
-            articles[3].parentNode.insertBefore(adBox2, articles[3].nextSibling);
         }
     }, 1500);
 });
