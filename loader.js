@@ -30,7 +30,8 @@ async function loadSingleNewsFile() {
   const ticker = document.getElementById('breaking-news');
 
   try {
-    const res = await fetch('all-news.html');
+    // ?t=Date.now() लगाने से ब्राउज़र कभी पुरानी फाइल (Cache) नहीं रखेगा, हमेशा तुरंत ताज़ा खबर दिखाएगा
+    const res = await fetch('all-news.html?t=' + Date.now());
     if (!res.ok) throw new Error('File not found');
     const fullHTML = await res.text();
 
