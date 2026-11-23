@@ -129,4 +129,28 @@ if (footer) {
       document.getElementById('real-views').textContent = localCount;
     });
 }
+
+// हर खबर के नीचे बिना फोन नंबर वाला WhatsApp शेयर बटन जोड़ना
+function addShareButtons() {
+  document.querySelectorAll('#news-container article').forEach(art => {
+    if (art.querySelector('.wa-share-btn')) return;
+    const title = art.querySelector('h2') ? art.querySelector('h2').textContent : 'Malik News';
+    const shareText = encodeURIComponent('📰 Malik News पर पढ़ें: ' + title + '\n👉 ' + window.location.href);
+ 
+    const btn = document.createElement('a');
+    btn.className = 'wa-share-btn';
+    btn.href = 'https://whatsapp.com' + shareText;
+    btn.target = '_blank';
+    btn.style.cssText = 'display: inline-block; margin-top: 12px; background: #16a34a; color: #fff; padding: 7px 14px; border-radius: 6px; text-decoration: none; font-size: 0.88rem; font-weight: bold;';
+    btn.textContent = '📲 WhatsApp पर शेयर करें';
+    art.appendChild(btn);
+  });
+}
+
+const newsObserver = new MutationObserver(addShareButtons);
+const newsBox = document.getElementById('news-container');
+if (newsBox) {
+  newsObserver.observe(newsBox, { childList: true });
+}
+ 
  
