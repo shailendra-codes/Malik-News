@@ -206,9 +206,10 @@ if (siteHeader && mainHeading && !document.getElementById('mn-brand-row')) {
   const textCol = document.createElement('div');
   textCol.style.cssText = 'display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1;';
 
-  const titleText = mainHeading.textContent.replace(/🎙️/g, '').trim();
   mainHeading.style.cssText = 'margin: 0 !important; padding: 0 !important; font-size: 2.5rem; font-weight: 900; line-height: 1.1; display: flex; align-items: center; justify-content: center; gap: 10px;';
-  mainHeading.innerHTML = '<span style="font-size: 2.4rem; line-height: 1;">🎙️</span><span style="line-height: 1;">' + titleText + '</span><span style="font-size: 2.4rem; line-height: 1;">🎙️</span>';
+  mainHeading.innerHTML = '<span style="font-size: 2.4rem;">🎙️</span><span>Malik News</span><span style="font-size: 2.4rem;">🎙️</span>';
+ 
+
 
   siteHeader.insertBefore(brandRow, mainHeading);
   brandRow.appendChild(createLogo());
