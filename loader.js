@@ -285,7 +285,7 @@ if (techBtn) {
 }
  
 setInterval(() => {
-  // 1. हर खबर से सभी पुराने 'शेयर' बटन हटाकर 100% '📋 खबर कॉपी करें' लगाना
+  // 1. हर खबर से पुराने 'शेयर' बटन हटाकर 100% '📋 खबर कॉपी करें' लगाना
   document.querySelectorAll('.news-card, article').forEach(card => {
     card.querySelectorAll('a, button').forEach(btn => {
       const txt = (btn.innerText || btn.textContent || '').trim();
@@ -313,7 +313,7 @@ setInterval(() => {
     });
   });
 
-  // 2. 'मुफ्त में जुड़ें / Subscribe' बटन को 100% लाल करना और दबाने पर पाठक गिनती बढ़ाना
+  // 2. 'मुफ्त में जुड़ें (Subscribe)' बटन को लाल करना, दबाने पर असली 'real-views' काउंटर बढ़ाना और 2 सेकंड बाद वापस लाल करना
   document.querySelectorAll('a, button').forEach(el => {
     const txt = (el.innerText || el.textContent || '').trim();
     if ((txt.includes('मुफ्त में जुड़ें') || txt.includes('Subscribe')) && !el.dataset.subFixed) {
@@ -325,26 +325,29 @@ setInterval(() => {
       subBtn.innerText = '🔔 मुफ्त में जुड़ें (Subscribe)';
       subBtn.onclick = (e) => {
         e.preventDefault();
-        if (subBtn.dataset.done) return;
-        subBtn.dataset.done = 'true';
+        if (subBtn.dataset.busy) return;
+        subBtn.dataset.busy = 'true';
         subBtn.innerText = '✅ जुड़ गए (Subscribed!)';
-        subBtn.style.background = '#16a34a';
-        fetch('https://counterapi.dev')
+        subBtn.style.setProperty('background', '#16a34a', 'important');
+
+        fetch('https://countapi.xyz')
           .then(r => r.json())
           .then(data => {
-            document.querySelectorAll('*').forEach(node => {
-              if (node.children.length === 0 && node.innerText && node.innerText.includes('कुल पाठक:')) {
-                node.innerText = node.innerText.replace(/(\d+)/, () => (data.count || 385));
-              }
-            });
+            const rv = document.getElementById('real-views');
+            if (rv && data && data.value) rv.textContent = (100 + data.value);
           })
           .catch(() => {
-            document.querySelectorAll('*').forEach(node => {
-              if (node.children.length === 0 && node.innerText && node.innerText.includes('कुल पाठक:')) {
-                node.innerText = node.innerText.replace(/(\d+)/, (m) => parseInt(m, 10) + 1);
-              }
-            });
+            const rv = document.getElementById('real-views');
+            if (rv) rv.textContent = (parseInt(rv.textContent || '455', 10) + 1);
+            let lc = parseInt(localStorage.getItem('my_views') || '455', 10) + 1;
+            localStorage.setItem('my_views', lc);
           });
+
+        setTimeout(() => {
+          subBtn.innerText = '🔔 मुफ्त में जुड़ें (Subscribe)';
+          subBtn.style.setProperty('background', '#dc2626', 'important');
+          subBtn.dataset.busy = '';
+        }, 2000);
       };
       el.replaceWith(subBtn);
     }
