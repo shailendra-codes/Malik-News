@@ -313,7 +313,7 @@ setInterval(() => {
     });
   });
 
-  // 2. 'मुफ्त में जुड़ें (Subscribe)' बटन को लाल करना, दबाने पर असली 'real-views' काउंटर बढ़ाना और 2 सेकंड बाद वापस लाल करना
+  // 2. 'मुफ्त में जुड़ें (Subscribe)' बटन को लाल करना, दबाते ही तुरंत पाठक बढ़ाना और 2 सेकंड बाद वापस लाल करना
   document.querySelectorAll('a, button').forEach(el => {
     const txt = (el.innerText || el.textContent || '').trim();
     if ((txt.includes('मुफ्त में जुड़ें') || txt.includes('Subscribe')) && !el.dataset.subFixed) {
@@ -330,18 +330,11 @@ setInterval(() => {
         subBtn.innerText = '✅ जुड़ गए (Subscribed!)';
         subBtn.style.setProperty('background', '#16a34a', 'important');
 
-        fetch('https://countapi.xyz')
-          .then(r => r.json())
-          .then(data => {
-            const rv = document.getElementById('real-views');
-            if (rv && data && data.value) rv.textContent = (100 + data.value);
-          })
-          .catch(() => {
-            const rv = document.getElementById('real-views');
-            if (rv) rv.textContent = (parseInt(rv.textContent || '455', 10) + 1);
-            let lc = parseInt(localStorage.getItem('my_views') || '455', 10) + 1;
-            localStorage.setItem('my_views', lc);
-          });
+        const rv = document.getElementById('real-views');
+        const current = parseInt((rv ? rv.textContent : localStorage.getItem('my_views')) || '455', 10) || 455;
+        const nextVal = current + 1;
+        if (rv) rv.textContent = nextVal;
+        localStorage.setItem('my_views', nextVal);
 
         setTimeout(() => {
           subBtn.innerText = '🔔 मुफ्त में जुड़ें (Subscribe)';
