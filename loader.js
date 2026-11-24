@@ -300,8 +300,8 @@ setInterval(() => {
         copyBtn.onclick = () => {
           const clone = card.cloneNode(true);
           clone.querySelectorAll('a, button').forEach(b => b.remove());
-          const headerText = '📰 *MALIK NEWS — स्वतंत्र भारत की बुलंद आवाज़*\n━━━━━━━━━━━━━━━━━━━━━━\n';
-          const footerText = '\n━━━━━━━━━━━━━━━━━━━━━━\n🌐 पूरा अंक और ताज़ा खबरें फ्रंट पेज पर पढ़ें:\nhttps://github.io';
+          const headerText = '📰 MALIK NEWS — स्वतंत्र भारत की बुलंद आवाज़\n\n';
+          const footerText = '\n\n🌐 पूरा अंक और ताज़ा खबरें फ्रंट पेज पर पढ़ें:\n\nhttps://github.io\n';
           navigator.clipboard.writeText(headerText + clone.innerText.trim() + footerText);
           copyBtn.innerText = '✅ कॉपी हो गया!';
           copyBtn.style.background = '#0f766e';
