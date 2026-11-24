@@ -277,3 +277,10 @@ window.addEventListener('load', function() {
     }
 })();
  
+
+const MD_LINK = "https://shailendra-codes" + ".github.io/M-Drishti/";
+const catBar = document.querySelector('.category-bar') || document.querySelector('nav');
+if (catBar) {
+    catBar.insertAdjacentHTML('beforeend', `<a href="${MD_LINK}" target="_blank" style="background:#dc2626;color:#fff;padding:6px 14px;border-radius:16px;font-weight:700;text-decoration:none;font-size:0.85rem;white-space:nowrap;margin-left:6px;">👁️ M Drishti (वीडियो देखें)</a>`);
+}
+ 
