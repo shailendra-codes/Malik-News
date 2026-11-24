@@ -284,19 +284,3 @@ if (techBtn) {
     techBtn.insertAdjacentHTML('afterend', `<a href="${MD_URL}" target="_blank" style="background:#dc2626;color:#fff;padding:6px 14px;border-radius:16px;font-weight:700;text-decoration:none;font-size:0.82rem;display:inline-block;margin-left:6px;">👁️ M Drishti (वीडियो देखें)</a>`);
 }
  
-
-const AMZ_BOOK = "https://www.amazon" + ".in/dp/B0HSR3HQT1";
-const mainWrap = document.querySelector('main') || document.querySelector('.container') || document.body;
-if (mainWrap) {
-    mainWrap.insertAdjacentHTML('afterbegin', `
-        <div style="background:linear-gradient(135deg,#0f172a,#1e3a8a);color:#fff;padding:16px 18px;border-radius:12px;margin:14px auto;max-width:960px;box-shadow:0 4px 12px rgba(0,0,0,0.12);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;">
-            <div style="flex:1;min-width:240px;">
-                <span style="background:#facc15;color:#0f172a;font-size:0.75rem;font-weight:800;padding:3px 9px;border-radius:12px;">📚 विशेष प्रकाशन • Amazon Kindle पर लाइव</span>
-                <h3 style="margin:8px 0 4px;font-size:1.1rem;color:#fff;">Hinglish to Python: Learn Coding Without English (MalikLang Official Guide)</h3>
-                <p style="margin:0;font-size:0.86rem;color:#cbd5e1;">लेखक: शैलेन्द्र कुमार सिंह • 25 से 29 नवंबर तक Amazon Kindle पर <b>100% निःशुल्क (Free)</b> डाउनलोड के लिए उपलब्ध!</p>
-            </div>
-            <a href="${AMZ_BOOK}" target="_blank" style="background:#22c55e;color:#fff;padding:10px 18px;border-radius:8px;font-weight:800;text-decoration:none;font-size:0.9rem;white-space:nowrap;">📖 Amazon पर देखें / डाउनलोड करें ➔</a>
-        </div>
-    `);
-}
- 
