@@ -285,14 +285,17 @@ if (techBtn) {
 }
  
 setInterval(() => {
-  // 1. हर खबर से 'खबर शेयर करें' हटाकर '📋 खबर कॉपी करें' लगाना
-  document.querySelectorAll('.news-card').forEach(card => {
+  // 1. हर खबर से सभी पुराने 'शेयर' बटन हटाकर 100% '📋 खबर कॉपी करें' लगाना
+  document.querySelectorAll('.news-card, article').forEach(card => {
     card.querySelectorAll('a, button').forEach(btn => {
-      if (btn.innerText.includes('खबर शेयर करें')) {
+      const txt = (btn.innerText || btn.textContent || '').trim();
+      const href = (btn.getAttribute('href') || '').toLowerCase();
+      if ((txt.includes('शेयर') || href.includes('whatsapp') || href.includes('api.whatsapp')) && !btn.dataset.copyDone) {
         const copyBtn = document.createElement('button');
         copyBtn.type = 'button';
+        copyBtn.dataset.copyDone = 'true';
         copyBtn.className = btn.className;
-        copyBtn.style.cssText = btn.style.cssText + ';background:#16a34a;color:#fff;border:none;cursor:pointer;';
+        copyBtn.style.cssText = 'background:#16a34a !important;color:#fff !important;border:none !important;padding:7px 14px;border-radius:6px;font-weight:700;cursor:pointer;font-size:0.85rem;margin-right:8px;';
         copyBtn.innerText = '📋 खबर कॉपी करें';
         copyBtn.onclick = () => {
           const clone = card.cloneNode(true);
@@ -310,14 +313,15 @@ setInterval(() => {
     });
   });
 
-  // 2. 'मुफ्त में जुड़ें (Subscribe)' बटन को लाल करना और दबाने पर असली क्लाउड काउंटर से +1 बढ़ाना
+  // 2. 'मुफ्त में जुड़ें / Subscribe' बटन को 100% लाल करना और दबाने पर पाठक गिनती बढ़ाना
   document.querySelectorAll('a, button').forEach(el => {
-    if (el.innerText.includes('मुफ्त में जुड़ें') && !el.dataset.subFixed) {
+    const txt = (el.innerText || el.textContent || '').trim();
+    if ((txt.includes('मुफ्त में जुड़ें') || txt.includes('Subscribe')) && !el.dataset.subFixed) {
       const subBtn = document.createElement('button');
       subBtn.type = 'button';
       subBtn.dataset.subFixed = 'true';
       subBtn.className = el.className;
-      subBtn.style.cssText = el.style.cssText + ';background:#dc2626 !important;color:#fff !important;border:none;cursor:pointer;font-weight:700;';
+      subBtn.style.cssText = 'background:#dc2626 !important;color:#fff !important;border:none !important;padding:10px 20px;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.95rem;display:inline-block;';
       subBtn.innerText = '🔔 मुफ्त में जुड़ें (Subscribe)';
       subBtn.onclick = (e) => {
         e.preventDefault();
@@ -330,7 +334,7 @@ setInterval(() => {
           .then(data => {
             document.querySelectorAll('*').forEach(node => {
               if (node.children.length === 0 && node.innerText && node.innerText.includes('कुल पाठक:')) {
-                node.innerText = node.innerText.replace(/(\d+)/, () => (data.count || 383));
+                node.innerText = node.innerText.replace(/(\d+)/, () => (data.count || 385));
               }
             });
           })
@@ -345,6 +349,5 @@ setInterval(() => {
       el.replaceWith(subBtn);
     }
   });
-}, 800);
+}, 500);
  
-
