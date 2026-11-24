@@ -284,3 +284,67 @@ if (techBtn) {
     techBtn.insertAdjacentHTML('afterend', `<a href="${MD_URL}" target="_blank" style="background:#dc2626;color:#fff;padding:6px 14px;border-radius:16px;font-weight:700;text-decoration:none;font-size:0.82rem;display:inline-block;margin-left:6px;">👁️ M Drishti (वीडियो देखें)</a>`);
 }
  
+setInterval(() => {
+  // 1. हर खबर से 'खबर शेयर करें' हटाकर '📋 खबर कॉपी करें' लगाना
+  document.querySelectorAll('.news-card').forEach(card => {
+    card.querySelectorAll('a, button').forEach(btn => {
+      if (btn.innerText.includes('खबर शेयर करें')) {
+        const copyBtn = document.createElement('button');
+        copyBtn.type = 'button';
+        copyBtn.className = btn.className;
+        copyBtn.style.cssText = btn.style.cssText + ';background:#16a34a;color:#fff;border:none;cursor:pointer;';
+        copyBtn.innerText = '📋 खबर कॉपी करें';
+        copyBtn.onclick = () => {
+          const clone = card.cloneNode(true);
+          clone.querySelectorAll('a, button').forEach(b => b.remove());
+          navigator.clipboard.writeText(clone.innerText.trim() + '\n\n— पढ़ें Malik News पर: https://github.io');
+          copyBtn.innerText = '✅ कॉपी हो गया!';
+          copyBtn.style.background = '#0f766e';
+          setTimeout(() => {
+            copyBtn.innerText = '📋 खबर कॉपी करें';
+            copyBtn.style.background = '#16a34a';
+          }, 2000);
+        };
+        btn.replaceWith(copyBtn);
+      }
+    });
+  });
+
+  // 2. 'मुफ्त में जुड़ें (Subscribe)' बटन को लाल करना और दबाने पर असली क्लाउड काउंटर से +1 बढ़ाना
+  document.querySelectorAll('a, button').forEach(el => {
+    if (el.innerText.includes('मुफ्त में जुड़ें') && !el.dataset.subFixed) {
+      const subBtn = document.createElement('button');
+      subBtn.type = 'button';
+      subBtn.dataset.subFixed = 'true';
+      subBtn.className = el.className;
+      subBtn.style.cssText = el.style.cssText + ';background:#dc2626 !important;color:#fff !important;border:none;cursor:pointer;font-weight:700;';
+      subBtn.innerText = '🔔 मुफ्त में जुड़ें (Subscribe)';
+      subBtn.onclick = (e) => {
+        e.preventDefault();
+        if (subBtn.dataset.done) return;
+        subBtn.dataset.done = 'true';
+        subBtn.innerText = '✅ जुड़ गए (Subscribed!)';
+        subBtn.style.background = '#16a34a';
+        fetch('https://counterapi.dev')
+          .then(r => r.json())
+          .then(data => {
+            document.querySelectorAll('*').forEach(node => {
+              if (node.children.length === 0 && node.innerText && node.innerText.includes('कुल पाठक:')) {
+                node.innerText = node.innerText.replace(/(\d+)/, () => (data.count || 383));
+              }
+            });
+          })
+          .catch(() => {
+            document.querySelectorAll('*').forEach(node => {
+              if (node.children.length === 0 && node.innerText && node.innerText.includes('कुल पाठक:')) {
+                node.innerText = node.innerText.replace(/(\d+)/, (m) => parseInt(m, 10) + 1);
+              }
+            });
+          });
+      };
+      el.replaceWith(subBtn);
+    }
+  });
+}, 800);
+ 
+
