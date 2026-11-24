@@ -1,10 +1,17 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://sitemaps.org">
   <url>
-    <loc>https://github.io</loc>
-    <lastmod>2026-11-23</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://shailendra-codes/github.io/Malik-News</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://shailendra-codes/github.io/Malik-News/all-news.html</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
  
