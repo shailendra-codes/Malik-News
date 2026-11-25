@@ -365,7 +365,7 @@ setInterval(() => {
       box.id = 'pagination-box';
       box.style.cssText = 'text-align:center; margin:18px 0 28px 0;';
       box.innerHTML = `
-        <button id="loadMoreBtn" style="background:#0f172a; color:#ffffff; border:none; padding:7px 18px; border-radius:6px; font-size:0.92rem; font-weight:700; cursor:pointer;">
+        <button id="loadMoreBtn" style="background:#dc2626; color:#ffffff; border:none; padding:7px 18px; border-radius:6px; font-size:0.92rem; font-weight:700; cursor:pointer;">
           Next ➔
         </button>
         <span id="ank-counter" style="display:block; font-size:0.8rem; color:#64748b; margin-top:5px;"></span>
