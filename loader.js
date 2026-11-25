@@ -349,3 +349,52 @@ setInterval(() => {
   });
 }, 500);
  
+
+// 10-10 अंकों का स्मार्ट पेजिनेशन (Load Next 10)
+(function initPagination() {
+  const perPage = 10;
+  let visibleCount = perPage;
+
+  function applyPagination() {
+    const cards = Array.from(document.querySelectorAll('.news-card'));
+    if (cards.length === 0) {
+      setTimeout(applyPagination, 400);
+      return;
+    }
+
+    let box = document.getElementById('pagination-box');
+    if (!box) {
+      box = document.createElement('div');
+      box.id = 'pagination-box';
+      box.style.cssText = 'text-align:center; margin:25px 0 35px 0;';
+      box.innerHTML = `
+        <button id="loadMoreBtn" style="background:#0f172a; color:#ffffff; border:none; padding:12px 24px; border-radius:8px; font-size:1rem; font-weight:700; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.12);">
+          ⬇️ अगले 10 पुराने अंक दिखाएं (Next)
+        </button>
+        <p id="ank-counter" style="font-size:0.88rem; color:#64748b; margin-top:8px;"></p>
+      `;
+      cards[cards.length - 1].parentNode.appendChild(box);
+      document.getElementById('loadMoreBtn').onclick = function() {
+        visibleCount += perPage;
+        applyPagination();
+      };
+    }
+
+    cards.forEach((card, index) => {
+      card.style.display = (index < visibleCount) ? 'block' : 'none';
+    });
+
+    const btn = document.getElementById('loadMoreBtn');
+    const counter = document.getElementById('ank-counter');
+    if (visibleCount >= cards.length) {
+      btn.style.display = 'none';
+      counter.innerText = `सभी ${cards.length} अंक दिखाए जा चुके हैं`;
+    } else {
+      btn.style.display = 'inline-block';
+      counter.innerText = `अभी ${visibleCount} / ${cards.length} अंक दिख रहे हैं`;
+    }
+  }
+
+  setTimeout(applyPagination, 500);
+})();
+ 
