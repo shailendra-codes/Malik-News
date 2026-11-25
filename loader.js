@@ -410,7 +410,7 @@ setInterval(() => {
 // Counter.dev Live Analytics (Malik News)
 (function() {
   var script = document.createElement('script');
-  script.src = 'https://counter.dev';
+  script.src = 'https://cdn.counter.dev/script.js';
   script.setAttribute('data-id', '8487ddea-6080-42f0-b37f-c64841d44128');
   script.setAttribute('data-utcoffset', '6');
   document.head.appendChild(script);
