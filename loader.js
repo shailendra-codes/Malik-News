@@ -311,64 +311,7 @@ setInterval(() => {
     }
   });
 }, 500);
- 
-// 10-10 अंकों का स्मार्ट पेजिनेशन (सभी 28+ <article> अंकों के लिए)
-(function initPagination() {
-  const perPage = 10;
-  let visibleCount = perPage;
-  let lastCount = 0;
 
-  function applyPagination() {
-    const cards = Array.from(document.querySelectorAll('article'));
-    if (cards.length === 0) return;
-
-    let box = document.getElementById('pagination-box');
-    if (!box) {
-      box = document.createElement('div');
-      box.id = 'pagination-box';
-      box.style.cssText = 'text-align:center; margin:18px 0 28px 0;';
-      box.innerHTML = `
-        <button id="loadMoreBtn" style="background:#dc2626; color:#ffffff; border:none; padding:7px 18px; border-radius:6px; font-size:0.92rem; font-weight:700; cursor:pointer;">
-          Next ➔
-        </button>
-        <span id="ank-counter" style="display:block; font-size:0.8rem; color:#64748b; margin-top:5px;"></span>
-      `;
-      document.body.appendChild(box);
-    }
-
-    const lastVisibleIndex = Math.min(visibleCount, cards.length) - 1;
-    if (cards[lastVisibleIndex] && cards[lastVisibleIndex].parentNode) {
-      cards[lastVisibleIndex].parentNode.insertBefore(box, cards[lastVisibleIndex].nextSibling);
-    }
-
-    document.getElementById('loadMoreBtn').onclick = function() {
-      visibleCount += perPage;
-      applyPagination();
-    };
-
-    cards.forEach((card, index) => {
-      card.style.display = (index < visibleCount) ? 'block' : 'none';
-    });
-
-    const btn = document.getElementById('loadMoreBtn');
-    const counter = document.getElementById('ank-counter');
-    if (visibleCount >= cards.length) {
-      btn.style.display = 'none';
-      counter.innerText = `कुल ${cards.length} अंक`;
-    } else {
-      btn.style.display = 'inline-block';
-      counter.innerText = `${visibleCount} / ${cards.length}`;
-    }
-  }
-
-  setInterval(() => {
-    const currentCount = document.querySelectorAll('article').length;
-    if (currentCount !== lastCount && currentCount > 0) {
-      lastCount = currentCount;
-      applyPagination();
-    }
-  }, 500);
-})();
 
 // Counter.dev Live Analytics (Malik News)
 (function() {
