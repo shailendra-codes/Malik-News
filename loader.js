@@ -1,4 +1,3 @@
-
 let allArticlesHTML = [];
 let currentCategory = 'all';
 
