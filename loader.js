@@ -105,31 +105,14 @@ function filterNews() {
 
 loadSingleNewsFile();
  
-// वेबसाइट के नीचे अपने आप बढ़ने वाला असली लाइव काउंटर (100 से आगे गिनेगा)
-const footer = document.querySelector('footer');
-if (footer) {
-  const counterBox = document.createElement('div');
-  counterBox.style.cssText = 'margin-top: 12px; display: inline-flex; align-items: center; gap: 8px; font-weight: bold; color: #ffffff; background: #1d4ed8; padding: 6px 14px; border-radius: 20px; border: 1px solid #93c5fd; font-size: 0.9rem;';
-  counterBox.innerHTML = '<span>👁️ कुल पाठक:</span> <span id="real-views" style="background:#dc2626; padding:2px 10px; border-radius:12px; color:#fff;">...</span>';
-  footer.appendChild(counterBox);
-
-  const apiHost = 'https://countapi.xyz';
-  const apiPath = '/hit/malik-news-shailendra-2026/visits';
-
-  fetch(apiHost + apiPath)
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById('real-views').textContent = (100 + data.value);
-    })
-    .catch(() => {
-      // यदि बाहरी सर्वर व्यस्त हो, तो भी हर विज़िट पर स्थानीय गिनती बढ़ाएगा
-      let localCount = parseInt(localStorage.getItem('mn_views') || '100');
-      localCount += 1;
-      localStorage.setItem('mn_views', localCount);
-      document.getElementById('real-views').textContent = localCount;
-    });
-}
-
+  // संपादक परिचय बॉक्स (About Editor)
+  const footer = document.querySelector('footer');
+  if (footer) {
+    const aboutBox = document.createElement('div');
+    aboutBox.style.cssText = 'max-width:860px; margin:20px auto 12px auto; padding:18px 20px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:12px; color:#1e293b; font-size:0.95rem; line-height:1.6; text-align:left;';
+    aboutBox.innerHTML = '<h3 style="margin:0 0 8px 0; color:#0f172a; font-size:1.1rem;">✍️ Malik News • संपादक परिचय (About Editor)</h3><p style="margin:0;"><strong>शैलेन्द्र कुमार सिंह</strong> — संपादक, <strong>Malik News</strong>। इस मंच के माध्यम से <strong>राष्ट्रीय व अंतरराष्ट्रीय समाचार, रोज़गार, आम समस्याएं, सरकारी योजनाएं, खेल जगत, मनोरंजन, टेक इंडस्ट्री और परीक्षा-उपयोगी ज्ञान</strong> को सरल भाषा में समाज तक पहुँचाने का निरंतर प्रयास।</p>';
+    footer.parentNode.insertBefore(aboutBox, footer);
+  }
 
 // हर खबर के नीचे 'शेयर करें' और 'ईमेल से भेजें (Mail)' दोनों बटन लगाना
 function addShareButtons() {
