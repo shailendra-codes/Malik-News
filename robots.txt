@@ -1,0 +1,6 @@
+
+User-agent: *
+Allow: /
+
+Sitemap: https://shailendra-codes.github.io/Malik-News/sitemap.xml
+ 
