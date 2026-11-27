@@ -233,22 +233,18 @@ window.addEventListener('load', function() {
     });
 
     // 2. संपादक परिचय बॉक्स जोड़ें
-    if (!document.getElementById('editor-about-box')) {
-        const aboutBox = document.createElement('div');
-        aboutBox.id = 'editor-about-box';
-        aboutBox.style.cssText = 'max-width: 800px; margin: 20px auto 15px auto; padding: 15px 18px; background: #f8fafc; border-left: 4px solid #dc2626; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); font-family: inherit; line-height: 1.6; color: #1e293b;';
-        aboutBox.innerHTML = '<h3 style="margin: 0 0 8px 0; font-size: 1.05rem; color: #dc2626;">📰 Malik News • संपादक परिचय (About Editor)</h3>' +
-            '<p style="margin: 4px 0; font-size: 0.92rem;"><strong>संस्थापक एवं संपादक:</strong> शैलेन्द्र कुमार सिंह</p>' +
-            '<p style="margin: 4px 0; font-size: 0.92rem;"><strong>प्रकाशन प्रारूप:</strong> साप्ताहिक विशेष अंक (प्रत्येक सोमवार) एवं दैनिक समाचार बुलेटिन</p>' +
-            '<p style="margin: 4px 0 0 0; font-size: 0.92rem;"><strong>उद्देश्य:</strong> पूरे भारत की आम समस्याओं, रोजगार, अर्थव्यवस्था और राष्ट्रीय-अंतरराष्ट्रीय घटनाओं को निष्पक्ष, निर्भीक एवं सरल भाषा में पाठकों तक पहुँचाना।</p>';
-
-        const footer = document.querySelector('footer');
-        if (footer) {
-            footer.parentNode.insertBefore(aboutBox, footer);
-        } else {
-            document.body.appendChild(aboutBox);
-        }
+  if (!document.getElementById('editor-about-box')) {
+    const aboutBox = document.createElement('div');
+    aboutBox.id = 'editor-about-box';
+    aboutBox.style.cssText = 'max-width:860px; margin:20px auto 12px auto; padding:18px 20px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:12px; color:#1e293b; font-size:0.95rem; line-height:1.6; text-align:left;';
+    aboutBox.innerHTML = '<h3 style="margin:0 0 8px 0; color:#0f172a; font-size:1.1rem;">✍️ Malik News • संपादक परिचय (About Editor)</h3><p style="margin:0;"><strong>शैलेन्द्र कुमार सिंह</strong> — संपादक, <strong>Malik News</strong>। इस मंच के माध्यम से <strong>राष्ट्रीय व अंतरराष्ट्रीय समाचार, रोज़गार, आम समस्याएं, सरकारी योजनाएं, खेल जगत, मनोरंजन, टेक इंडस्ट्री और परीक्षा-उपयोगी ज्ञान</strong> को सरल भाषा में समाज तक पहुँचाने का निरंतर प्रयास।</p>';
+    const footer = document.querySelector('footer');
+    if (footer) {
+      footer.parentNode.insertBefore(aboutBox, footer);
+    } else {
+      document.body.appendChild(aboutBox);
     }
+  }
 })();
  
 
