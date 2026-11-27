@@ -332,12 +332,6 @@ setInterval(() => {
         subBtn.innerText = '✅ जुड़ गए (Subscribed!)';
         subBtn.style.setProperty('background', '#16a34a', 'important');
 
-        const rv = document.getElementById('real-views');
-        const current = parseInt((rv ? rv.textContent : localStorage.getItem('my_views')) || '455', 10) || 455;
-        const nextVal = current + 1;
-        if (rv) rv.textContent = nextVal;
-        localStorage.setItem('my_views', nextVal);
-
         setTimeout(() => {
           subBtn.innerText = '🔔 मुफ्त में जुड़ें (Subscribe)';
           subBtn.style.setProperty('background', '#dc2626', 'important');
